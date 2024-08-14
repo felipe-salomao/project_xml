@@ -1,6 +1,8 @@
 require 'nokogiri'
 
 class ReportsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @report = Report.new
   end

@@ -2,8 +2,13 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
   root 'reports#new'
-  resources :reports, only: [:new, :create, :show]
+
+  # Autenticacao de usuarios
+  devise_for :users
 
   # Sidekiq
   mount Sidekiq::Web => '/sidekiq'
+
+  # Relatorios
+  resources :reports, only: [:new, :create, :show]
 end
