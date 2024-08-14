@@ -18,7 +18,7 @@ class ReportsController < ApplicationController
   def show
     @report = Report.find(params[:id])
 
-    unless @report.produtos.present?
+    unless @report.products.present?
       flash[:notice] = 'O relatório ainda está sendo processado. Você será redirecionado em breve...'
       render :processing
     end

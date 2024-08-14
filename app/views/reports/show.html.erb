@@ -1,44 +1,98 @@
 <h1>Relatório</h1>
 
-<h2>Dados do Documento Fiscal</h2>
-<p><strong>Série:</strong> <%= @report.serie %></p>
-<p><strong>Número da Nota Fiscal:</strong> <%= @report.nNF %></p>
-<p><strong>Data e Hora de Emissão:</strong> <%= @report.dhEmi %></p>
-<p><strong>Emitente:</strong> <%= @report.emit %></p>
-<p><strong>Destinatário:</strong> <%= @report.dest %></p>
+<div class="filters">
+  <button onclick="showSection('all')">Mostrar Tudo</button>
+  <button onclick="showSection('document-info')">Dados do Documento Fiscal</button>
+  <button onclick="showSection('emitter')">Emitente</button>
+  <button onclick="showSection('receiver')">Destinatário</button>
+  <button onclick="showSection('products')">Produtos Listados</button>
+  <button onclick="showSection('taxes')">Impostos Associados</button>
+  <button onclick="showSection('totalizers')">Totalizadores</button>
+</div>
 
-<h2>Produtos Listados</h2>
-<table>
-  <thead>
-    <tr>
-      <th>Nome</th>
-      <th>NCM</th>
-      <th>CFOP</th>
-      <th>Unidade</th>
-      <th>Quantidade</th>
-      <th>Valor Unitário</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% JSON.parse(@report.produtos).each do |produto| %>
+<div id="document-info" class="report-section">
+  <h2>Dados do Documento Fiscal</h2>
+  <p><strong>Série:</strong> <%= @report.document_info.serie %></p>
+  <p><strong>Número da Nota Fiscal:</strong> <%= @report.document_info.nnf %></p>
+  <p><strong>Data e Hora de Emissão:</strong> <%= @report.document_info.dhemi %></p>
+</div>
+
+<div id="emitter" class="report-section" style="display: none;">
+  <h2>Emitente</h2>
+  <p><strong>Documento:</strong> <%= @report.document_info.companies.emitter.first.document %></p>
+  <p><strong>Nome:</strong> <%= @report.document_info.companies.emitter.first.name %></p>
+  <p><strong>Nome Fantasia:</strong> <%= @report.document_info.companies.emitter.first.fantasy %></p>
+  <p><strong>IE:</strong> <%= @report.document_info.companies.emitter.first.ie %></p>
+  <p><strong>CRT:</strong> <%= @report.document_info.companies.emitter.first.crt %></p>
+</div>
+
+<div id="receiver" class="report-section" style="display: none;">
+  <h2>Destinatário</h2>
+  <p><strong>Documento:</strong> <%= @report.document_info.companies.receiver.first.document %></p>
+  <p><strong>Nome:</strong> <%= @report.document_info.companies.receiver.first.name %></p>
+  <p><strong>IndIE:</strong> <%= @report.document_info.companies.receiver.first.ind_ie %></p>
+</div>
+
+<div id="products" class="report-section" style="display: none;">
+  <h2>Produtos Listados</h2>
+  <table>
+    <thead>
       <tr>
-        <td><%= produto["nome"] %></td>
-        <td><%= produto["ncm"] %></td>
-        <td><%= produto["cfop"] %></td>
-        <td><%= produto["ucom"] %></td>
-        <td><%= produto["qcom"] %></td>
-        <td><%= produto["vuncom"] %></td>
+        <th>Nome</th>
+        <th>NCM</th>
+        <th>CFOP</th>
+        <th>Unidade</th>
+        <th>Quantidade</th>
+        <th>Valor Unitário</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @report.products.each do |produto| %>
+        <tr>
+          <td><%= produto.name %></td>
+          <td><%= produto.ncm %></td>
+          <td><%= produto.cfop %></td>
+          <td><%= produto.unity %></td>
+          <td><%= produto.quantity %></td>
+          <td><%= produto.value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
-<h2>Impostos Associados</h2>
-<p><strong>Valor do ICMS:</strong> <%= JSON.parse(@report.impostos)["icms"] %></p>
-<p><strong>Valor do IPI:</strong> <%= JSON.parse(@report.impostos)["ipi"] %></p>
-<p><strong>Valor do PIS:</strong> <%= JSON.parse(@report.impostos)["pis"] %></p>
-<p><strong>Valor do COFINS:</strong> <%= JSON.parse(@report.impostos)["cofins"] %></p>
+<div id="taxes" class="report-section" style="display: none;">
+  <h2>Impostos Associados</h2>
+  <p><strong>Valor do ICMS:</strong> <%= @report.tax.icms %></p>
+  <p><strong>Valor do IPI:</strong> <%= @report.tax.ipi %></p>
+  <p><strong>Valor do PIS:</strong> <%= @report.tax.pis %></p>
+  <p><strong>Valor do COFINS:</strong> <%= @report.tax.cofins %></p>
+</div>
 
-<h2>Totalizadores</h2>
-<p><strong>Total dos Produtos:</strong> <%= JSON.parse(@report.totalizadores)["total_produtos"] %></p>
-<p><strong>Total dos Impostos:</strong> <%= JSON.parse(@report.totalizadores)["total_impostos"] %></p>
+<div id="totalizers" class="report-section" style="display: none;">
+  <h2>Totalizadores</h2>
+  <p><strong>Total dos Produtos:</strong> <%= @report.totalizer.total_products %></p>
+  <p><strong>Total dos Impostos:</strong> <%= @report.totalizer.total_taxes %></p>
+</div>
+
+<script>
+  function showSection(sectionId) {
+    if (sectionId === 'all') {
+      document.querySelectorAll('.report-section').forEach(section => {
+        section.style.display = 'block';
+      });
+    } else {
+      document.querySelectorAll('.report-section').forEach(section => {
+        if (section.id === sectionId) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    showSection('all');
+  });
+</script>
