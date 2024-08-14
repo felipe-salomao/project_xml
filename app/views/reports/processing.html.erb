@@ -1,0 +1,8 @@
+<p><%= flash[:notice] %></p>
+
+<!-- Redireciona o usuário após 5 segundos -->
+<script>
+  setTimeout(function() {
+    window.location.href = "<%= report_path(@report) %>";
+  }, 5000);
+</script>

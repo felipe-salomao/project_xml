@@ -1,0 +1,44 @@
+<h1>Relatório</h1>
+
+<h2>Dados do Documento Fiscal</h2>
+<p><strong>Série:</strong> <%= @report.serie %></p>
+<p><strong>Número da Nota Fiscal:</strong> <%= @report.nNF %></p>
+<p><strong>Data e Hora de Emissão:</strong> <%= @report.dhEmi %></p>
+<p><strong>Emitente:</strong> <%= @report.emit %></p>
+<p><strong>Destinatário:</strong> <%= @report.dest %></p>
+
+<h2>Produtos Listados</h2>
+<table>
+  <thead>
+    <tr>
+      <th>Nome</th>
+      <th>NCM</th>
+      <th>CFOP</th>
+      <th>Unidade</th>
+      <th>Quantidade</th>
+      <th>Valor Unitário</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% JSON.parse(@report.produtos).each do |produto| %>
+      <tr>
+        <td><%= produto["nome"] %></td>
+        <td><%= produto["ncm"] %></td>
+        <td><%= produto["cfop"] %></td>
+        <td><%= produto["ucom"] %></td>
+        <td><%= produto["qcom"] %></td>
+        <td><%= produto["vuncom"] %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<h2>Impostos Associados</h2>
+<p><strong>Valor do ICMS:</strong> <%= JSON.parse(@report.impostos)["icms"] %></p>
+<p><strong>Valor do IPI:</strong> <%= JSON.parse(@report.impostos)["ipi"] %></p>
+<p><strong>Valor do PIS:</strong> <%= JSON.parse(@report.impostos)["pis"] %></p>
+<p><strong>Valor do COFINS:</strong> <%= JSON.parse(@report.impostos)["cofins"] %></p>
+
+<h2>Totalizadores</h2>
+<p><strong>Total dos Produtos:</strong> <%= JSON.parse(@report.totalizadores)["total_produtos"] %></p>
+<p><strong>Total dos Impostos:</strong> <%= JSON.parse(@report.totalizadores)["total_impostos"] %></p>

@@ -1,0 +1,24 @@
+<h1>Upload de Arquivo XML</h1>
+
+<%= form_with(model: @report, local: true) do |form| %>
+  <% if @report.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@report.errors.count, "erro") %> proíbe este relatório de ser salvo:</h2>
+
+      <ul>
+        <% @report.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :xml_file, "Selecione o arquivo XML" %><br>
+    <%= form.file_field :xml_file %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit "Enviar" %>
+  </div>
+<% end %>

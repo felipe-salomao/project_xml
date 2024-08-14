@@ -59,6 +59,7 @@ gem 'dotenv-rails'
 
 # Biblioteca para execução de tarefas assíncronas
 gem 'sidekiq', '~> 6.4'
+gem 'redis'
 
 # Usada para fazer upload de arquivos
 gem 'carrierwave'
