@@ -64,6 +64,9 @@ gem 'redis'
 # Usada para fazer upload de arquivos
 gem 'carrierwave'
 
+# Usada para exportar no formato do excel
+gem 'write_xlsx'
+
 group :development, :rspec, :test do
   # Usado para interromper a execução e obter um console do depurador
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

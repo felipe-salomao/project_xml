@@ -170,6 +170,7 @@ GEM
     net-smtp (0.5.0)
       net-protocol
     nio4r (2.7.1)
+    nkf (0.2.0)
     nokogiri (1.16.4-x64-mingw32)
       racc (~> 1.4)
     nokogiri (1.16.4-x86_64-linux)
@@ -316,6 +317,9 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
+    write_xlsx (1.12.1)
+      nkf
+      rubyzip (>= 1.0.0)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.6.13)
@@ -359,6 +363,7 @@ DEPENDENCIES
   web-console (>= 4.1.0)
   webdrivers
   webpacker (~> 5.0)
+  write_xlsx
 
 RUBY VERSION
    ruby 3.0.6p216

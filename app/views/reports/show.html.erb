@@ -1,5 +1,7 @@
 <h1>Relatório</h1>
 
+<%= link_to 'Exportar para Excel', export_to_excel_report_path(@report), class: 'btn btn-primary', method: :get %>
+
 <div class="filters">
   <button onclick="showSection('all')">Mostrar Tudo</button>
   <button onclick="showSection('document-info')">Dados do Documento Fiscal</button>

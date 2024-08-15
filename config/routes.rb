@@ -10,5 +10,9 @@ Rails.application.routes.draw do
   mount Sidekiq::Web => '/sidekiq'
 
   # Relatorios
-  resources :reports, only: [:new, :create, :show]
+  resources :reports, only: [:new, :create, :show] do
+    member do
+      get :export_to_excel
+    end
+  end
 end
