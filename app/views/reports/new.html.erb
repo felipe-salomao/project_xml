@@ -24,3 +24,15 @@
     <%= form.submit "Enviar" %>
   </div>
 <% end %>
+
+<h1>Importar Arquivo ZIP</h1>
+
+<%= form_with url: import_zip_reports_path, method: :post, local: true, html: { multipart: true } do |form| %>
+  <div class="form-group">
+    <%= form.label :zip_file, 'Escolha um arquivo ZIP para upload:' %>
+    <%= form.file_field :zip_file %>
+  </div>
+  <div class="form-group">
+    <%= form.submit 'Importar ZIP', class: 'btn btn-primary' %>
+  </div>
+<% end %>

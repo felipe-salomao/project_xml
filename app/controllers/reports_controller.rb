@@ -90,9 +90,42 @@ class ReportsController < ApplicationController
     send_file file_path, filename: "relatorio_#{@report.id}.xlsx", type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
   end
 
+  def import_zip
+    if params[:zip_file].present?
+      zip_file = params[:zip_file]
+      
+      begin
+        process_zip(zip_file)
+        redirect_to reports_path, notice: 'Arquivos XML importados e processados com sucesso.'
+      rescue StandardError => e
+        Rails.logger.error "Erro ao processar o arquivo ZIP: #{e.message}"
+        redirect_to reports_path, alert: 'Ocorreu um erro ao processar o arquivo ZIP.'
+      end
+    else
+      redirect_to reports_path, alert: 'Por favor, selecione um arquivo ZIP para upload.'
+    end
+  end
+
   private
 
   def report_params
     params.require(:report).permit(:xml_file)
   end
+
+  def process_zip(zip_file)
+    Zip::File.open(zip_file.path) do |zip_file|
+      zip_file.each do |entry|
+        next unless entry.file? && entry.name.end_with?('.xml')
+  
+        tmp_dir = Rails.root.join('tmp')
+        file_path = File.join(tmp_dir, entry.name)
+
+        entry.extract(file_path)
+  
+        report = Report.create!(xml_file: File.open(file_path))
+  
+        ProcessXmlJob.perform_async(report.id)
+      end
+    end
+  end  
 end

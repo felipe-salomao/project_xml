@@ -14,5 +14,9 @@ Rails.application.routes.draw do
     member do
       get :export_to_excel
     end
+
+    collection do
+      post :import_zip
+    end
   end
 end
