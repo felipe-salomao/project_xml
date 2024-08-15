@@ -9,6 +9,9 @@ Bundler.require(*Rails.groups)
 module ProjectXML
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
+    config.time_zone = 'Brasilia'
+    config.active_record.default_timezone = :local
+
     config.load_defaults 6.1
 
     config.autoload_paths << Rails.root.join('app/resources')

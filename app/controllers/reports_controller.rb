@@ -6,12 +6,16 @@ class ReportsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_report!, only: [:show, :export_to_excel]
 
+  def index
+    @reports = current_user.reports.order(created_at: :desc)
+  end
+
   def new
-    @report = Report.new
+    @report = current_user.reports.new
   end
 
   def create
-    @report = Report.new(report_params)
+    @report = current_user.reports.new(report_params)
 
     if @report.save
       ProcessXmlJob.perform_async(@report.id)
@@ -36,10 +40,10 @@ class ReportsController < ApplicationController
   end
 
   def import_zip
-    response = Reports::ImportZip.new(params[:zip_file]).execute
+    response = Reports::ImportZip.new(current_user, params[:zip_file]).execute
     
     if response
-      redirect_to reports_path, notice: 'Arquivos XML importados e processados com sucesso.'
+      redirect_to root_path, notice: 'Arquivos XML importados e processados com sucesso.'
     else
       redirect_to new_report_path, alert: 'Ocorreu um erro ao processar o arquivo ZIP.'
     end
@@ -52,6 +56,6 @@ class ReportsController < ApplicationController
   end
 
   def set_report!
-    @report = Report.find(params[:id])
+    @report = current_user.reports.find(params[:id])
   end  
 end

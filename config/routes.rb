@@ -1,7 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  root 'reports#new'
+  root 'reports#index'
 
   # Autenticacao de usuarios
   devise_for :users

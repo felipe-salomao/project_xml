@@ -1,0 +1,29 @@
+<h1>XML Importados</h1>
+
+<%= link_to 'Importar Novo Arquivo XML', new_report_path, class: 'btn btn-primary' %>
+<%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+
+<% if @reports.empty? %>
+  <h2>Ainda não há arquivos XML importados.</h2>
+<% else %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome do Arquivo</th>
+        <th>Data de Importação</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @reports.each do |report| %>
+        <tr>
+          <td><%= link_to report.xml_file.identifier.to_s, report_path(report) %></td>
+          <td><%= report.created_at.strftime("%d/%m/%Y às %H:%M") %></td>
+          <td>
+            <%= link_to 'Visualizar', report_path(report), class: 'btn btn-info' %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
