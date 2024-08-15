@@ -11,6 +11,7 @@ module ProjectXML
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
 
+    config.autoload_paths << Rails.root.join('app/resources')
     config.eager_load_paths += Dir[Rails.root.join('app', 'models', '**', '*')]
 
     # Configuration for the application, engines, and railties goes here.
