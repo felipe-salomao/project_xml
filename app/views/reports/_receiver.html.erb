@@ -1,0 +1,11 @@
+<div id="receiver" class="report-section">
+  <h2>Destinatário</h2>
+
+  <% receiver = @report.document_info.companies.receiver.first %>
+  <% address = receiver.address %>
+
+  <p><strong>Documento:</strong> <%= receiver.format_cnpj %></p>
+  <p><strong>Nome:</strong> <%= receiver.name %></p>
+  <p><strong>IndIE:</strong> <%= receiver.ind_ie %></p>
+  <p><strong>Endereço:</strong> <%= "#{address.lgr}, #{address.neighborhood}, #{address.uf}, #{address.country}" %></p>
+</div>

@@ -1,0 +1,14 @@
+<div id="emitter" class="report-section">
+  <h2>Emitente</h2>
+
+  <% emitter = @report.document_info.companies.emitter.first %>
+  <% address = emitter.address %>
+
+  <p><strong>Documento:</strong> <%= emitter.format_cnpj %></p>
+  <p><strong>Nome:</strong> <%= emitter.name %></p>
+  <p><strong>Nome Fantasia:</strong> <%= emitter.fantasy %></p>
+  <p><strong>IE:</strong> <%= emitter.ie %></p>
+  <p><strong>CRT:</strong> <%= emitter.crt %></p>
+  <p><strong>Telefone:</strong> <%= address.phone %></p>
+  <p><strong>Endereço:</strong> <%= "#{address.lgr}, #{address.nro}, #{address.neighborhood}, #{address.uf}, #{address.country}" %></p>
+</div>

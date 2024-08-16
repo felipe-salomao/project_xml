@@ -1,4 +1,6 @@
 class Company < ApplicationRecord
+  include CompanyHelperMethods
+
   belongs_to :document_info
 
   has_one :address, dependent: :destroy
