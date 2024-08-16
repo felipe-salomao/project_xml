@@ -15,15 +15,12 @@ class ReportsController < ApplicationController
   end
 
   def create
-    @report = current_user.reports.new(report_params)
+    return render :new if params[:report].blank?
 
-    if @report.save
-      ImportXmlJob.perform_async(@report.id)
+    @report = current_user.reports.create!(report_params)
+    ImportXmlJob.perform_async(@report.id)
 
-      redirect_to @report, notice: 'Arquivo XML importado com sucesso.'
-    else
-      render :new
-    end
+    redirect_to @report, notice: 'Arquivo XML importado com sucesso.'
   end
 
   def show
@@ -57,5 +54,7 @@ class ReportsController < ApplicationController
 
   def set_report!
     @report = current_user.reports.find(params[:id])
-  end  
+  rescue ActiveRecord::RecordNotFound
+    redirect_to root_path, alert: 'Relatório não encontrado.'
+  end
 end
