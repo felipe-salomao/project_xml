@@ -1,0 +1,31 @@
+<div class="filters text-center py-5">
+  <button onclick="showSection('all')">Mostrar Tudo</button>
+  <button onclick="showSection('document-info')">Dados do Documento Fiscal</button>
+  <button onclick="showSection('emitter')">Emitente</button>
+  <button onclick="showSection('receiver')">Destinatário</button>
+  <button onclick="showSection('products')">Produtos Listados</button>
+  <button onclick="showSection('taxes')">Impostos Associados</button>
+  <button onclick="showSection('totalizers')">Totalizadores</button>
+</div>
+
+<script>
+  function showSection(sectionId) {
+    if (sectionId === 'all') {
+      document.querySelectorAll('.report-section').forEach(section => {
+        section.style.display = 'block';
+      });
+    } else {
+      document.querySelectorAll('.report-section').forEach(section => {
+        if (section.id === sectionId) {
+          section.style.display = 'block';
+        } else {
+          section.style.display = 'none';
+        }
+      });
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    showSection('all');
+  });
+</script>

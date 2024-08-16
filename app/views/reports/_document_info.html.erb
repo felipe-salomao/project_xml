@@ -1,0 +1,24 @@
+<div class="report-container">
+  <div id="document-info" class="report-section">
+    <h2>Dados do Documento Fiscal</h2>
+    <p><strong>Série:</strong> <%= @report.document_info.serie %></p>
+    <p><strong>Número da Nota Fiscal:</strong> <%= @report.document_info.nnf %></p>
+    <p><strong>Data e Hora de Emissão:</strong> <%= @report.document_info.dhemi.strftime("%d/%m/%Y às %H:%M") %></p>
+  </div>
+
+  <div id="emitter" class="report-section">
+    <h2>Emitente</h2>
+    <p><strong>Documento:</strong> <%= @report.document_info.companies.emitter.first.document %></p>
+    <p><strong>Nome:</strong> <%= @report.document_info.companies.emitter.first.name %></p>
+    <p><strong>Nome Fantasia:</strong> <%= @report.document_info.companies.emitter.first.fantasy %></p>
+    <p><strong>IE:</strong> <%= @report.document_info.companies.emitter.first.ie %></p>
+    <p><strong>CRT:</strong> <%= @report.document_info.companies.emitter.first.crt %></p>
+  </div>
+
+  <div id="receiver" class="report-section">
+    <h2>Destinatário</h2>
+    <p><strong>Documento:</strong> <%= @report.document_info.companies.receiver.first.document %></p>
+    <p><strong>Nome:</strong> <%= @report.document_info.companies.receiver.first.name %></p>
+    <p><strong>IndIE:</strong> <%= @report.document_info.companies.receiver.first.ind_ie %></p>
+  </div>
+</div>

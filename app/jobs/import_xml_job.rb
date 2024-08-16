@@ -1,19 +1,19 @@
-class ProcessXmlJob
+class ImportXmlJob
   include Sidekiq::Worker
 
   def perform(report_id)
     report = Report.find(report_id)
-    process_xml(report)
+    import_xml(report)
   end
 
   private
 
-  def process_xml(report)
+  def import_xml(report)
     file_path = report.xml_file.path
     doc = Nokogiri::XML(File.open(file_path))
     nfe_namespace = { 'nfe' => 'http://www.portalfiscal.inf.br/nfe' }
 
-    # Processar informações do documento
+    # Informações do documento
     document_info = DocumentInfo.create!(
       serie: doc.xpath('//nfe:serie', nfe_namespace).text,
       nnf: doc.xpath('//nfe:nNF', nfe_namespace).text,
@@ -21,23 +21,23 @@ class ProcessXmlJob
       report_id: report.id
     )
 
-    # Processar empresas
-    process_company(doc, 'emit', :emitter, document_info.id, nfe_namespace)
-    process_company(doc, 'dest', :receiver, document_info.id, nfe_namespace)
+    # Informações do emitente e destinatario
+    mount_company(doc, 'emit', :emitter, document_info.id, nfe_namespace)
+    mount_company(doc, 'dest', :receiver, document_info.id, nfe_namespace)
 
-    # Processar produtos
-    process_product(doc, nfe_namespace, report.id)
+    # Informações dos produtos
+    mount_product(doc, nfe_namespace, report.id)
 
-    # Processar impostos
-    process_tax(doc, nfe_namespace, report.id)
+    # Informações dos impostos
+    mount_tax(doc, nfe_namespace, report.id)
 
     # Calcular totalizadores
-    process_totalizer(report.id)
+    mount_totalizer(report.id)
 
     report.save
   end
 
-  def process_company(doc, role, entity_type, document_info_id, nfe_namespace)
+  def mount_company(doc, role, entity_type, document_info_id, nfe_namespace)
     company_xml = doc.xpath("//nfe:#{role}", nfe_namespace)
 
     company = Company.create!(
@@ -51,10 +51,10 @@ class ProcessXmlJob
       document_info_id: document_info_id
     )
 
-    process_address(company_xml, role.capitalize, nfe_namespace, company.id)
+    mount_address(company_xml, role.capitalize, nfe_namespace, company.id)
   end
 
-  def process_address(company_xml, role, nfe_namespace, company_id)
+  def mount_address(company_xml, role, nfe_namespace, company_id)
     Address.create!(
       lgr: company_xml.xpath("nfe:ender#{role}/nfe:xLgr", nfe_namespace).text,
       nro: company_xml.xpath("nfe:ender#{role}/nfe:nro", nfe_namespace).text.to_i,
@@ -70,7 +70,7 @@ class ProcessXmlJob
     )
   end
 
-  def process_product(doc, nfe_namespace, report_id)
+  def mount_product(doc, nfe_namespace, report_id)
     doc.xpath('//nfe:det/nfe:prod', nfe_namespace).each do |prod|
       Product.create!(
         name: prod.xpath('nfe:xProd', nfe_namespace).text,
@@ -84,7 +84,7 @@ class ProcessXmlJob
     end
   end
 
-  def process_tax(doc, nfe_namespace, report_id)
+  def mount_tax(doc, nfe_namespace, report_id)
     Tax.create!(
       icms: doc.xpath('//nfe:ICMS//nfe:vICMS', nfe_namespace).text.to_f,
       ipi: doc.xpath('//nfe:IPI//nfe:vIPI', nfe_namespace).text.to_f,
@@ -94,7 +94,7 @@ class ProcessXmlJob
     )
   end
 
-  def process_totalizer(report_id)
+  def mount_totalizer(report_id)
     total_products = Product.where(report_id: report_id).sum('quantity * value')
     total_taxes = Tax.where(report_id: report_id).sum('icms + ipi + pis + cofins')
 

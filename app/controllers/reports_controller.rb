@@ -18,16 +18,16 @@ class ReportsController < ApplicationController
     @report = current_user.reports.new(report_params)
 
     if @report.save
-      ProcessXmlJob.perform_async(@report.id)
+      ImportXmlJob.perform_async(@report.id)
 
-      redirect_to @report, notice: 'Relatório enviado para processamento em segundo plano.'
+      redirect_to @report, notice: 'Arquivo XML importado com sucesso.'
     else
       render :new
     end
   end
 
   def show
-    if report.products.blank?
+    if report.document_info.blank?
       flash[:notice] = 'O relatório ainda está sendo processado. Você será redirecionado em breve...'
       render :processing
     end
@@ -43,9 +43,9 @@ class ReportsController < ApplicationController
     response = Reports::ImportZip.new(current_user, params[:zip_file]).execute
     
     if response
-      redirect_to root_path, notice: 'Arquivos XML importados e processados com sucesso.'
+      redirect_to root_path, notice: 'Arquivo ZIP importado com sucesso.'
     else
-      redirect_to new_report_path, alert: 'Ocorreu um erro ao processar o arquivo ZIP.'
+      redirect_to new_report_path, alert: 'Ocorreu um erro ao importar o arquivo ZIP.'
     end
   end
 

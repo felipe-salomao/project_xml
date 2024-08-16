@@ -1,0 +1,15 @@
+<div class="report-container py-4">
+  <div id="taxes" class="report-section">
+    <h2>Impostos Associados</h2>
+    <p><strong>Valor do ICMS:</strong> <%= @report.tax.icms %></p>
+    <p><strong>Valor do IPI:</strong> <%= @report.tax.ipi %></p>
+    <p><strong>Valor do PIS:</strong> <%= @report.tax.pis %></p>
+    <p><strong>Valor do COFINS:</strong> <%= @report.tax.cofins %></p>
+  </div>
+
+  <div id="totalizers" class="report-section">
+    <h2>Totalizadores</h2>
+    <p><strong>Total dos Produtos:</strong> <%= @report.totalizer.total_products %></p>
+    <p><strong>Total dos Impostos:</strong> <%= @report.totalizer.total_taxes %></p>
+  </div>
+</div>

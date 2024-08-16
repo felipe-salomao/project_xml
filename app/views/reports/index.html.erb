@@ -1,29 +1,46 @@
-<h1>XML Importados</h1>
+<div class="container">
+  <header class="top-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-13 text-center">
+        <h1>XML Importados</h1>
+      </div>
+      <div class="col-1 text-center">
+        <%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+      </div>
+    </div>
+  </header>
+</div>
 
-<%= link_to 'Importar Novo Arquivo XML', new_report_path, class: 'btn btn-primary' %>
-<%= link_to 'Sign out', destroy_user_session_path, method: :delete %>
+<div class="text-center">
+  <%= link_to 'Importar arquivo XML', new_report_path, class: 'btn btn-primary text-white' %>
+</div>
+
 
 <% if @reports.empty? %>
-  <h2>Ainda não há arquivos XML importados.</h2>
+  <div class="text-center py-5">
+    <h2>Ainda não há arquivos XML importados.</h2>
+  </div>
 <% else %>
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Nome do Arquivo</th>
-        <th>Data de Importação</th>
-        <th>Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @reports.each do |report| %>
+  <div class="py-5">
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= link_to report.xml_file.identifier.to_s, report_path(report) %></td>
-          <td><%= report.created_at.strftime("%d/%m/%Y às %H:%M") %></td>
-          <td>
-            <%= link_to 'Visualizar', report_path(report), class: 'btn btn-info' %>
-          </td>
+          <th>Nome do Arquivo</th>
+          <th>Data de Importação</th>
+          <th>Ações</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% @reports.each do |report| %>
+          <tr>
+            <td><%= link_to report.xml_file.identifier.to_s, report_path(report) %></td>
+            <td><%= report.created_at.strftime("%d/%m/%Y às %H:%M") %></td>
+            <td>
+              <%= link_to 'Visualizar', report_path(report), class: 'btn btn-info text-white' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

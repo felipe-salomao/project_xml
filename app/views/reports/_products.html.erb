@@ -1,0 +1,28 @@
+<div id="products" class="report-section py-4">
+  <h2 class="text-center">Produtos Listados</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>NCM</th>
+        <th>CFOP</th>
+        <th>Unidade</th>
+        <th>Quantidade</th>
+        <th>Valor Unitário</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @report.products.each do |produto| %>
+        <tr>
+          <td><%= produto.name %></td>
+          <td><%= produto.ncm %></td>
+          <td><%= produto.cfop %></td>
+          <td><%= produto.unity %></td>
+          <td><%= produto.quantity %></td>
+          <td><%= produto.value %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

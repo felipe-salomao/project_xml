@@ -1,104 +1,20 @@
-<h1>Relatório</h1>
-
-<%= link_to 'Voltar à Lista', root_path, class: 'btn btn-secondary' %>
-<%= link_to 'Exportar para Excel', export_to_excel_report_path(@report), class: 'btn btn-primary', method: :get %>
-<%= link_to 'Importar Novo Arquivo XML', new_report_path, class: 'btn btn-primary' %>
-
-<div class="filters">
-  <button onclick="showSection('all')">Mostrar Tudo</button>
-  <button onclick="showSection('document-info')">Dados do Documento Fiscal</button>
-  <button onclick="showSection('emitter')">Emitente</button>
-  <button onclick="showSection('receiver')">Destinatário</button>
-  <button onclick="showSection('products')">Produtos Listados</button>
-  <button onclick="showSection('taxes')">Impostos Associados</button>
-  <button onclick="showSection('totalizers')">Totalizadores</button>
+<div class="container">
+  <header class="top-header py-3">
+    <div class="row flex-nowrap justify-content-between align-items-center">
+      <div class="col-4 text-center">
+        <%= link_to 'Voltar à Lista', root_path, class: 'btn btn-primary text-white' %>
+      </div>
+      <div class="col-4 text-center">
+        <h1>Relatório</h1>
+      </div>
+      <div class="col-4 text-center">
+        <%= link_to 'Exportar para Excel', export_to_excel_report_path(@report), class: 'btn btn-success', method: :get %>
+      </div>
+    </div>
+  </header>
 </div>
 
-<div class="report-container">
-  <div id="document-info" class="report-section">
-    <h2>Dados do Documento Fiscal</h2>
-    <p><strong>Série:</strong> <%= @report.document_info.serie %></p>
-    <p><strong>Número da Nota Fiscal:</strong> <%= @report.document_info.nnf %></p>
-    <p><strong>Data e Hora de Emissão:</strong> <%= @report.document_info.dhemi.strftime("%d/%m/%Y às %H:%M") %></p>
-  </div>
-
-  <div id="emitter" class="report-section">
-    <h2>Emitente</h2>
-    <p><strong>Documento:</strong> <%= @report.document_info.companies.emitter.first.document %></p>
-    <p><strong>Nome:</strong> <%= @report.document_info.companies.emitter.first.name %></p>
-    <p><strong>Nome Fantasia:</strong> <%= @report.document_info.companies.emitter.first.fantasy %></p>
-    <p><strong>IE:</strong> <%= @report.document_info.companies.emitter.first.ie %></p>
-    <p><strong>CRT:</strong> <%= @report.document_info.companies.emitter.first.crt %></p>
-  </div>
-
-  <div id="receiver" class="report-section">
-    <h2>Destinatário</h2>
-    <p><strong>Documento:</strong> <%= @report.document_info.companies.receiver.first.document %></p>
-    <p><strong>Nome:</strong> <%= @report.document_info.companies.receiver.first.name %></p>
-    <p><strong>IndIE:</strong> <%= @report.document_info.companies.receiver.first.ind_ie %></p>
-  </div>
-</div>
-
-<div id="products" class="report-section">
-  <h2>Produtos Listados</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Nome</th>
-        <th>NCM</th>
-        <th>CFOP</th>
-        <th>Unidade</th>
-        <th>Quantidade</th>
-        <th>Valor Unitário</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% @report.products.each do |produto| %>
-        <tr>
-          <td><%= produto.name %></td>
-          <td><%= produto.ncm %></td>
-          <td><%= produto.cfop %></td>
-          <td><%= produto.unity %></td>
-          <td><%= produto.quantity %></td>
-          <td><%= produto.value %></td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
-
-<div id="taxes" class="report-section">
-  <h2>Impostos Associados</h2>
-  <p><strong>Valor do ICMS:</strong> <%= @report.tax.icms %></p>
-  <p><strong>Valor do IPI:</strong> <%= @report.tax.ipi %></p>
-  <p><strong>Valor do PIS:</strong> <%= @report.tax.pis %></p>
-  <p><strong>Valor do COFINS:</strong> <%= @report.tax.cofins %></p>
-</div>
-
-<div id="totalizers" class="report-section">
-  <h2>Totalizadores</h2>
-  <p><strong>Total dos Produtos:</strong> <%= @report.totalizer.total_products %></p>
-  <p><strong>Total dos Impostos:</strong> <%= @report.totalizer.total_taxes %></p>
-</div>
-
-<script>
-  function showSection(sectionId) {
-    if (sectionId === 'all') {
-      document.querySelectorAll('.report-section').forEach(section => {
-        section.style.display = 'block';
-      });
-    } else {
-      document.querySelectorAll('.report-section').forEach(section => {
-        if (section.id === sectionId) {
-          section.style.display = 'block';
-        } else {
-          section.style.display = 'none';
-        }
-      });
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    showSection('all');
-  });
-</script>
+<%= render 'filters' %>
+<%= render 'document_info' %>
+<%= render 'products' %>
+<%= render 'taxes_and_totalizers' %>

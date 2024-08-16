@@ -26,7 +26,7 @@ class Reports::ImportZip
   
         report = current_user.reports.create(xml_file: File.open(file_path))
   
-        ProcessXmlJob.perform_async(report.id)
+        ImportXmlJob.perform_async(report.id)
       end
     end
   end

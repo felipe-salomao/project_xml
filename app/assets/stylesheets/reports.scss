@@ -14,3 +14,23 @@
   min-width: 300px;
   text-align: center;
 }
+
+.top-header {
+  line-height: 1;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.text-white {
+  color: #ffffff;
+}
+
+#products table {
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 15px 10px;
+  width: auto;
+}
+
+#products th, #products td {
+  padding: 10px;
+}
