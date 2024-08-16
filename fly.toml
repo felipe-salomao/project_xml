@@ -1,0 +1,36 @@
+# fly.toml app configuration file generated for project-xml on 2024-08-16T18:36:53-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'project-xml'
+primary_region = 'gru'
+console_command = '/rails/bin/rails console'
+
+[build]
+  [build.args]
+    BUILD_COMMAND = "bin/rails fly:build"
+    SERVER_COMMAND = "bin/rails fly:server"
+
+[deploy]
+  release_command = "bin/rails fly:release"
+
+[env]
+  PORT = "3000"
+
+[experimental]
+  allowed_public_ports = []
+  auto_rollback = true
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  min_machines_running = 0
+  processes = ['app']
+
+[[statics]]
+  guest_path = "/app/public"
+  url_prefix = "/"
+
+[[vm]]
+  size = 'shared-cpu-1x'
