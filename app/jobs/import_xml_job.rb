@@ -1,3 +1,6 @@
+require 'open-uri'
+require 'nokogiri'
+
 class ImportXmlJob
   include Sidekiq::Worker
 
@@ -9,8 +12,8 @@ class ImportXmlJob
   private
 
   def import_xml(report)
-    file_path = report.xml_file.path
-    doc = Nokogiri::XML(File.open(file_path))
+    xml_file_content = URI.open(report.xml_file.url).read
+    doc = Nokogiri::XML(xml_file_content)
     nfe_namespace = { 'nfe' => 'http://www.portalfiscal.inf.br/nfe' }
 
     # Informações do documento

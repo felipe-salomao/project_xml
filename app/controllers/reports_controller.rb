@@ -1,5 +1,3 @@
-require 'nokogiri'
-
 class ReportsController < ApplicationController
   attr_accessor :report
 
