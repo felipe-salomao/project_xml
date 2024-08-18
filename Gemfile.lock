@@ -132,6 +132,7 @@ GEM
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.0-x64-mingw32)
+    ffi (1.17.0-x86_64-linux-gnu)
     fog-aws (3.24.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
@@ -211,7 +212,10 @@ GEM
     nkf (0.2.0)
     nokogiri (1.16.7-x64-mingw32)
       racc (~> 1.4)
+    nokogiri (1.16.7-x86_64-linux)
+      racc (~> 1.4)
     orm_adapter (0.5.0)
+    pg (1.5.7)
     pg (1.5.7-x64-mingw32)
     public_suffix (6.0.1)
     puma (5.6.8)
@@ -293,6 +297,8 @@ GEM
     rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
+    sassc (2.4.0)
+      ffi (~> 1.9)
     sassc (2.4.0-x64-mingw32)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -364,6 +370,7 @@ GEM
 
 PLATFORMS
   x64-mingw32
+  x86_64-linux
 
 DEPENDENCIES
   aws-sdk-s3
