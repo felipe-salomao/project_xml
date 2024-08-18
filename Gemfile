@@ -74,6 +74,8 @@ gem 'rubyzip', '~> 2.3'
 gem 'aws-sdk-s3', require: false
 gem 'fog-aws'
 
+gem 'ffi', '~> 1.16'
+
 group :development, :rspec, :test do
   # Usado para interromper a execução e obter um console do depurador
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

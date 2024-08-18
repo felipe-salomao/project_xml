@@ -78,7 +78,6 @@ GEM
       aws-sigv4 (~> 1.5)
     aws-sigv4 (1.9.1)
       aws-eventstream (~> 1, >= 1.0.2)
-    base64 (0.2.0)
     bcrypt (3.1.20)
     bindex (0.8.1)
     bootsnap (1.18.4)
@@ -133,7 +132,6 @@ GEM
     faker (3.4.2)
       i18n (>= 1.8.11, < 2)
     ffi (1.17.0-x64-mingw32)
-    ffi (1.17.0-x86_64-linux-gnu)
     fog-aws (3.24.0)
       fog-core (~> 2.1)
       fog-json (~> 1.1)
@@ -213,10 +211,7 @@ GEM
     nkf (0.2.0)
     nokogiri (1.16.7-x64-mingw32)
       racc (~> 1.4)
-    nokogiri (1.16.7-x86_64-linux)
-      racc (~> 1.4)
     orm_adapter (0.5.0)
-    pg (1.5.7)
     pg (1.5.7-x64-mingw32)
     public_suffix (6.0.1)
     puma (5.6.8)
@@ -264,7 +259,10 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0)
     rake (13.2.1)
-    redis (4.8.1)
+    redis (5.2.0)
+      redis-client (>= 0.22.0)
+    redis-client (0.22.2)
+      connection_pool
     regexp_parser (2.9.2)
     responders (3.1.1)
       actionpack (>= 5.2)
@@ -295,8 +293,6 @@ GEM
     rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
     sassc (2.4.0-x64-mingw32)
       ffi (~> 1.9)
     sassc-rails (2.1.2)
@@ -305,19 +301,17 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    selenium-webdriver (4.23.0)
-      base64 (~> 0.2)
-      logger (~> 1.4)
+    selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
       websocket (~> 1.0)
     semantic_range (3.0.0)
     shoulda-matchers (4.5.1)
       activesupport (>= 4.2.0)
-    sidekiq (6.5.12)
-      connection_pool (>= 2.2.5, < 3)
+    sidekiq (6.5.5)
+      connection_pool (>= 2.2.2)
       rack (~> 2.0)
-      redis (>= 4.5.0, < 5)
+      redis (>= 4.5.0)
     simple_form (5.3.1)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
@@ -348,10 +342,10 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webdrivers (5.2.0)
+    webdrivers (5.3.1)
       nokogiri (~> 1.6)
       rubyzip (>= 1.3.0)
-      selenium-webdriver (~> 4.0)
+      selenium-webdriver (~> 4.0, < 4.11)
     webpacker (5.4.4)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
@@ -370,7 +364,6 @@ GEM
 
 PLATFORMS
   x64-mingw32
-  x86_64-linux
 
 DEPENDENCIES
   aws-sdk-s3
@@ -384,6 +377,7 @@ DEPENDENCIES
   dotenv-rails
   factory_bot_rails (~> 6.2)
   faker (~> 3.3, >= 3.3.1)
+  ffi (~> 1.16)
   fog-aws
   groupdate (~> 5.2)
   image_processing (~> 1.2)
@@ -416,4 +410,4 @@ RUBY VERSION
    ruby 3.0.6p216
 
 BUNDLED WITH
-   2.2.33
+   2.5.17
