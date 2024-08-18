@@ -48,6 +48,8 @@ RSpec.configure do |config|
 
   Sidekiq::Testing.fake!
 
+  ENV['AWS_ACCESS_KEY_ID'] = 'dummy_key_id'
+  ENV['AWS_SECRET_ACCESS_KEY'] = 'dummy_secret_key'
   # You can uncomment this line to turn off ActiveRecord support entirely.
   # config.use_active_record = false
 
